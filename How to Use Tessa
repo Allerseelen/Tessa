@@ -135,4 +135,5 @@
 		voicing), the duration of phonation (voicing), the percentage of time spent voicing (voicing duration / total duration), and the 
 		estimated number of vocal fold cycles (calculated from frequency and duration data).
 
-As stated at the end of Step 13, users can bring up any of the analyses in Step 14 by pressing the analysis they wish to perform, navigating to a compiled MAT file, and opening it.
+As stated at the end of Step 13, users can bring up any of the analyses in Step 14 by pressing the analysis they wish to perform, 
+navigating to a compiled MAT file, and opening it.
