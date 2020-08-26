@@ -1,139 +1,132 @@
-1. Download sheet music
-	Download sheet music in open-source MusicXML format (file extension MXL). Both musescore.com and musicalion.com have a variety of 
-	sheet music in this format; only musescore.com is free, however.
+---DOWNLOADING SHEET MUSIC AND PREPARING FOR CONVERSION---
 
-2. MusicXML Libraries
+1. Download sheet music
+	Download sheet music in the open-source MusicXML format (file extension .mxl). Both musescore.com and musicalion.com have a variety of 
+	sheet music in this format.
+
+2. MusicXML libraries
 	Download MusicXML libraries and definitions. These are available at https://github.com/grame-cncm/libmusicxml/releases, and tell 
 	MATLAB how it is meant to interpret the data contained within the sheet music files.
 
-3. Notes about the MXL Format
-	The MXL format is a compressed format that must be decompressed to XML for analysis. By far the easiest way to do this is by 
-	downloading and installing Finale Notepad, a free version of the popular Finale score writing software.
+3. Notes about the .mxl format
+	The MXL format is a compressed format that must be decompressed to a .xml for analysis. By far the easiest way to do this is with 
+	Finale Notepad, a free version of the popular Finale music notation software.
 
-4. Import MXL file into Finale Notepad
-	In Finale Notepad, select ‘File → MusicXML → Import’ to import your MXL file.
+4. Import .mxl file into Finale Notepad
+	In Finale Notepad, select ‘File → MusicXML → Import’ to import your .mxl file, or simply open it by double-clicking the file.
 	
 	IMPORTANT NOTE: After import, it is CRITICAL to check the score visually for errors, inconsistencies, and other mistakes. Tessa 
-	reads and analyzes the musical data contained within XML files! It does not error check or “judge” the data in any way unless it is 
-	unable to parse or compile data from the file.
+	reads and analyzes the musical data contained within MusicXML files! It does not error check or “judge” the data in any way unless 
+	it is unable to parse or compile data from the file.
 	
-5. Export MXL to XML
-	In Finale Notepad, select ‘File → MusicXML → Export’. Choose XML as your output file format and save to the desired directory.
+5. Export the compressed .mxl file to an uncompressed .xml file
+	In Finale Notepad, select ‘File → MusicXML → Export’. Choose .xml as the output file format and save to the desired directory.
 
 6. Specify location of partwise.dtd
 	MusicXML handles scores in two different ways: partwise and timewise. Partwise scores lay out all the information in one musical 
-	part before moving on to the next musical part. Timewise scores lay out all the information for ALL parts in one measure before 
-	moving on to the next measure. Tessa analyzes sheet music using the partwise definition. In order to parse the XML file correctly, 
-	MATLAB must be told where in your file directory to look for the partwise.dtd file, which defines partwise scores. This file can be 
-	found in the MusicXML Libraries in the "schema" folder.
+	part (Violin, Oboe, Soprano, etc.) before moving on to the next musical part. Timewise scores lay out all the information for ALL 
+	parts in one measure before moving on to the next measure. Tessa analyzes sheet music using the partwise definition. In order to 
+	parse the .xml file correctly, MATLAB must be told where in users' file directories to look for the partwise.dtd file, which defines 
+	partwise scores. This file can be found in the MusicXML Libraries in the "schema" folder.
 	
 		a. Rationale for changing partwise.dtd file path to local storage
 			By default, MusicXML sheet music files “look for” partwise.dtd online. In instances where internet access is not 
 			available, however, Tessa will throw an error when the program attempts to contact the MusicXML server. It is easier and 
-			more consistent to change the XML sheet music to “look for” partwise.dtd in your locally stored MusicXML Libraries. 
+			more consistent to change the XML sheet music to “look for” partwise.dtd in locally stored MusicXML Libraries. 
 			
 		b. Copy file path of partwise.dtd
-			If you feel comfortable defining file paths manually, skip to Step 6c. Otherwise, open MATLAB and make sure that the 
-			directory containing all of Tessa's program files is displayed, loaded, and added to the current path. Then type ‘Tessa’ (no 
-			quotes) into the MatLab command line. This command will bring up the Graphic User Interface, or GUI. Under '1. Define 
-			Location of Partwise.dtd,' a button marked ‘Browse’ will open up a file browser to locate partwise.dtd. Once you have 
-			navigated to partwise.dtd and selected ‘Open,’ MATLAB will copy the file path to your clipboard automatically.
+			Open Tessa. In the panel titled '1. Define location of partwise.dtd,' a button marked ‘Browse’ will open up a file browser to 
+			locate partwise.dtd. Once users have navigated to partwise.dtd and selected ‘Open,’ MATLAB will automatically copy the 
+			file path to the clipboard.
 			
-		c. Open the XML file you wish to analyze
-			Open your XML sheet music file with your preferred XML editing software. Notepad++ is an excellent freeware option on 
-			Windows operating systems. In the second line of the XML file, you should see the following string of text:
-				i. “http://musicxml.org/dtds/partwise.dtd”
+		c. Open the .xml file you wish to analyze
+			Open the target .xml sheet music file with an .xml editing application. Notepad++ is an excellent freeware option on 
+			Windows operating systems. The following string of text will be written in the second line of the .xml file:
+				i. http://musicxml.org/dtds/partwise.dtd
 				
 		d. Replace string with local file path
-			Select the above text string, including quotation marks, and press Control+V to paste the file path on your clipboard over 
-			the text string. The second line of your XML file should now look like this, with the ‘C:\Users\Documents…’ file path 
-			replaced by your specified file path.
-				i.<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "C:\Users\Documents\musicxml-
-				3.1\schema\partwise.dtd">
+			Select the above text string, not including quotation marks, and paste the file path on the clipboard over the text string. 
+			The second line of the .xml file should now look like this, with the ‘C:\Users\Documents…’ file path replaced by the specified 
+			file path.
+				i.<!DOCTYPE score-partwise PUBLIC "-//Recordare//DTD MusicXML 3.0 Partwise//EN" "C:\Users\Documents\musicxml-3.1\schema\partwise.dtd">
 				
-		e. Save the XML file
-			Press Control+S to save the changes to your XML sheet music file.
+		e. Save the .xml file
+			Press Control+S to save the changes to the .xml sheet music file.
 			
 
----CONVERTING XML FILES TO MAT FILES---
+---CONVERTING .XML FILES TO .MAT FILES---
 
-7. Specify a file output name in GUI
-	Tessa's next step will be to convert the XML file you just exported into a MATLAB variable with the file extension MAT. Under ‘2. 
-	Convert XML File to MAT File,’ type the name that you would like Tessa to save your analyses as.
+1. Specify a file output name in the text field
+	Tessa's next step will be to convert the newly exported .xml file into a MATLAB variable with the file extension .mat. Under ‘2. Convert 
+	.xml file to MATLAB structure,’ type the name that Tessa will save its analyses as.
 		a. Examples: "Im wunderschonen Monat Mai," "Can't Help Lovin' That Man," or "A Little Priest."
 	
-8. Specify an XML file in GUI
-	Under ‘2. Convert XML File to MAT File,’ select ‘Browse → Target XML File’. Navigate to and select your newly edited XML file.
+2. Specify a .xml file to be converted
+	Under ‘2. Convert .xml file to MATLAB structure,’ select ‘Browse and Convert.’ Navigate to and select the decompressed, edited .xml file.
 	
-9. Wait for Tessa to parse the XML file
-	Assuming you gave Tessa an output name in Step 7, specifying an XML file to parse in Step 8 will immediately begin the process of 
-	converting that file to a MATLAB variable.
-		NOTE: This step is the longest in Tessa's runtime. There will be no indication that Tessa is running, but unless you receive an 
-		error message in MATLAB's command line, assume that everything is going well! A file with the output name you specified and the 
-		file extension MAT should appear within one to two minutes, depending on your computer's and the length of the piece you're 
-		analyzing.
-		SECOND NOTE: It is not necessary to perform Steps 7-9 each time you use Tessa. Once your MATLAB struct variable has been saved 
-		to a MAT file, you can skip to Step 10 in each subsequent analysis.
+3. Wait for Tessa to convert the .xml file into a MATLAB structure array
+	Specifying a .xml file to parse in Step 2 will immediately begin the process of converting that file into a MATLAB structure array.
+		NOTE: This step is the longest in Tessa's runtime. There will be no indication that Tessa is running, but that only means that 
+		everything is going well! A file with the user-specified output name and the file extension .mat should appear within 1-2 minutes, 
+		depending on processing power and the length of the piece selected for conversion.
+		SECOND NOTE: It is not necessary to perform the steps in this section or the previous section each time Tessa runs. 
+		Once the MATLAB structure array created in the conversion process is saved to the computer at the end of this step,
+		users can begin all future analyses of that piece by following the steps in the next section, Compiling Data from .Mat Files.
 		
 	
----COMPILING DATA FROM MAT FILES---
+---COMPILING DATA FROM .MAT FILES---
 	
-10.	Specify a Part ID
-	In most voice-piano scores, the Part ID of the voice part is P1. In more complex orchestral scores, however, you can determine the 
-	correct Part ID by counting parts from the top of the score. If a voice part is the ninth part from the top, its Part ID would be 
-	P9.
-		NOTE: Naming conventions are incredibly important to Tessa. Why? Well, if Tessa knows that it's going to look for all the 
-		information contained in the part marked "P1," it will ONLY look for information in parts marked "P1." If the user has entered 
-		"1" or "Part 1," Tessa won't know where to look for musical information. The name entered here must be the letter P followed by 
-		a number.
+1. Specify a Part ID
+	In most voice-piano scores, the Part ID of the voice part is P1. In more complex orchestral scores, however, the correct Part ID 
+	is determined by counting parts from the top of the score. If a voice part is the ninth part from the top, its Part ID would be P9.
+		NOTE: Naming conventions are incredibly important to Tessa: if the program knows to look for all the information contained 
+		in the part marked "P1," it will ONLY look for information in parts marked "P1." If users have entered "1" or "Part 1," 
+		Tessa won't know where to look for musical information. The name entered here must be the letter P followed by a number!
 	
-11. Specify a tempo
-	Tessa uses tempo for a variety of analyses, including creating histograms and estimating vocal fold cycles. Analyses are also 
-	presented in terms of subdivisions and beats, however, in case the piece features abrupt tempo changes, rubato, accelerandos, 
-	rallentandos, etc.
+2. Specify a tempo
+	Tessa uses tempo for a variety of analyses; the program will fail to compile musical data unless users have specified a tempo.
+	If pieces feature an abrupt shift in tempo partway through (e.g., in a cavatina/cabaletta aria) it may be easiest to separate the
+	MusicXML file into two parts, then analyze each separately. Future updates may introduce tempo shift compatibility.
 	
-12. Compile data from MAT file
-	Once you have entered which part to analyze, and at which tempo, selecting "Compile Data from MAT File" will cause Tessa scan 
-	through the MAT file, compiling data and running back-end analyses. After a few seconds, a new file will appear in your main MATLAB 
-	directory that contains the name of the piece, the Part ID, and the tempo.
+3. Compile data from MATLAB structure array
+	Once users have entered a part ID and tempo, selecting "Browse and Compile" will cause Tessa to scan through the MATLAB structure array, 
+	compiling data and running back-end analyses. After a few seconds, a new file will appear in the main MATLAB directory that contains 
+	the name of the piece, the part ID, and the tempo.
 		a. Example: "La ci darem la mano--P1--90 BPM.mat"
 		
-13. Verify the integrity of the compiled data
-	Verifying the integrity of the data that Tessa compiles is essential! Programs like Tessa are extremely fast, compared to hand 
-	calculation, but only operate under the strict parameters that they have been given. While I have made every effort to stress-test 
-	Tessa in order to stamp out bugs and glitches, it's likely that I haven't managed to eliminate all of them. Quickly scanning the 
-	full_score, full_pitch_sort, unique_F0, and summary_statistics variables for errors will make sure that the analyses Tessa performs 
-	are not faulty.
-		NOTE: Once you are satisfied that your compiled data has the correct Part ID and tempo data, and once you have verified that the 
-		compiled MATLAB variables are accurate and complete, you can skip directly to Step 14 in future. Simply point any of the 
-		analysis options at your finished MAT file ("Piece Name--Part ID--Tempo.mat") and Tessa will happily display histograms, box 
-		plots, voicing durations, and summary statistics.
+4. Verify the integrity of the compiled data
+	Verifying the integrity of the data that Tessa compiles is essential! Tessa is extremely fast, compared to hand calculation, but only 
+	operates under the strict parameters that it has been given. While I have made every effort to stress-test Tessa in order to stamp out 
+	bugs and glitches, it is likely that I have not managed to eliminate all of them. Quickly scanning the minimum and maximum fundamental 
+	frequency values, checking the contour of the melody in the Note-by-Note Tessitura tab, and visually reviewing the full_score, full_pitch_sort, 
+	and unique_F0 variables for errors will help ensure that the outputs Tessa returns are not faulty.
+		NOTE: Once users are satisfied that their compiled data has the correct Part ID and tempo, and once they have verified that the 
+		compiled MATLAB variables are accurate and complete, all future analyses of that piece (at that specific tempo and in that specific
+		part) can be conducted using Tessa's last major function, displaying graphics and metrics. Browse to the finished .mat file 
+		("Piece Name--Part ID--Tempo.mat") and Tessa will display all of its outputs across multiple tabs.
 
 
----PERFORMING ANALYSES---
+---DISPLAYING GRAPHICS AND METRICS---
 
-14.	Perform analyses
-	Four analyses are available: ‘Display Bar Graph,’ ‘Display Box Plot,’ ‘Display Voicing Durations,’ and ‘Display Summary Statistics.’
+1.	Perform analyses
+	Four analysis tabs are available: ‘Global Tessitura Metrics,’ ‘Note-by-Note Tessitura Metrics,’ ‘Vocal Demand Metrics,’ and ‘Summary Statistics.’
 		
-		a. Bar Graph: the Bar Graph analysis displays Duration (in seconds) on the y-axis, and Frequency (in Hz) on the x-axis. It is 
-		intended to help users visualize the total duration of voicing at every frequency in the piece. A frequency-to-pitch spreadsheet 
-		is included in Tessa's program files in order to help users convert frequencies to pitches.
+		a. Global Tessitura Metrics: global tessitura metrics are insensitive to the time course of a piece--that is, they convey
+		information about a piece as a whole, not on a measure-by-measure basis. The 'Median, range, and interquartile frequencies'
+		axes object displays a box plot of the piece's frequency data, showing users the full range of fundamental frequencies as well
+		as the middle 50%, or interquartile range, of frequencies. The axes object 'Phonation time at each voiced frequency' displays
+		a histogram that sums the duration of voicing at each sung frequency throughout the piece.
 		
-		b. Box Plot: bar graphs, while useful for getting an overall sense of the distribution of a data set, do not adequately 
-		represent statistical concepts such as the median, interquartile range, or skew. Box plots, however, are ideal for this purpose, 
-		and easily break frequency and duration data down into quartiles (minimum to 25th percentile, 25th percentile to median, median 
-		to 75th percentile, and 75th percentile to maximum) while preserving outliers. The mean of each piece is represented as a green 
-		diamond. If the mean is located at a higher frequency than the median, it indicates that the piece skews toward higher pitches; 
-		if the mean is located at a lower frequency than the median, the piece skews toward lower pitches.
+		b. Note-by-Note Tessitura Metrics: note-by-note tessitura metrics show the melodic contour of a part in time. The default plot,
+		a blue dotted line, shows the fundamental frequency values; as users adjust the slider marked 'Moving Average Weight,' a second
+		plot, a solid red line, will appear. This plot shows the moving average of a number of fundamental frequency values equal to
+		the slider's value. As the slider's value decreases toward 1, the red moving average plot will increasingly resemble the raw 
+		fundamental frequency data in blue; as the slider's value increases toward 150, the contour will become progressively "smoothed."
+		Users can experiment with moving average slider values to determine which values best capture the melodic contour of the piece.
 		
-		c. Voicing Durations: the Voicing Durations analysis displays frequency and duration data as a table, rather than as a bar 
-		graph. Durations at each frequency value are given in both seconds (calculated from the user-specified tempo) and in musical 
-		beats.
+		c. Vocal Demand Metrics: percent time spent voicing, total vocal fold cycles, and mean vocal fold cycles per second are all indices
+		of phonatory dose. As these metrics rise, the vocal folds will generally contact each other more often, and the singer will have
+		fewer opportunities to rest in between periods of voicing. These metrics may therefore estimate "how big of a sing" a piece is.
 		
-		d. Summary Statistics: the Summary Statistics analysis displays minimum, maximum, mean, median, and interquartile frequencies as 
-		a table, rather than as a box plot. It also displays the estimated total duration of the piece, the duration of rests (no 
-		voicing), the duration of phonation (voicing), the percentage of time spent voicing (voicing duration / total duration), and the 
-		estimated number of vocal fold cycles (calculated from frequency and duration data).
-
-As stated at the end of Step 13, users can bring up any of the analyses in Step 14 by pressing the analysis they wish to perform, 
-navigating to a compiled MAT file, and opening it.
+		d. Summary Statistics: for users who prefer simple numerical outputs, rather than graphical outputs, the summary statistics tab
+		displays many of the outputs found in the other three tabs in numerical form.
