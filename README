@@ -1,23 +1,26 @@
 ---DOWNLOADING SHEET MUSIC AND PREPARING FOR CONVERSION---
 
 1. Download sheet music
-	Download sheet music in the open-source MusicXML format (file extension .mxl). Both musescore.com and musicalion.com have a variety of 
-	sheet music in this format.
+	Download sheet music in the open-source MusicXML format (file extension .mxl). Both musescore.com 
+	and musicalion.com have a variety of sheet music in this format.
 
 2. MusicXML libraries
-	Download MusicXML libraries and definitions. These are available at https://github.com/grame-cncm/libmusicxml/releases, and tell 
-	MATLAB how it is meant to interpret the data contained within the sheet music files.
+	Download MusicXML libraries and definitions. These are available at 
+	https://github.com/grame-cncm/libmusicxml/releases, and tell MATLAB how it is meant to interpret 
+	the data contained within the sheet music files.
 
 3. Notes about the .mxl format
-	The MXL format is a compressed format that must be decompressed to a .xml for analysis. By far the easiest way to do this is with 
-	Finale Notepad, a free version of the popular Finale music notation software.
+	The MXL format is a compressed format that must be decompressed to a .xml for analysis. By far 
+	the easiest way to do this is with Finale Notepad, a free version of the popular Finale music 
+	notation software.
 
 4. Import .mxl file into Finale Notepad
-	In Finale Notepad, select ‘File → MusicXML → Import’ to import your .mxl file, or simply open it by double-clicking the file.
+	In Finale Notepad, select ‘File → MusicXML → Import’ to import your .mxl file, or simply open it
+	by double-clicking the file.
 	
-	IMPORTANT NOTE: After import, it is CRITICAL to check the score visually for errors, inconsistencies, and other mistakes. Tessa 
-	reads and analyzes the musical data contained within MusicXML files! It does not error check or “judge” the data in any way unless 
-	it is unable to parse or compile data from the file.
+	IMPORTANT NOTE: After import, it is CRITICAL to check the score visually for errors, inconsistencies,
+	and other mistakes. Tessa reads and analyzes the musical data contained within MusicXML files! It does
+	not error check or “judge” the data in any way unless it is unable to parse or compile data from the file.
 	
 5. Export the compressed .mxl file to an uncompressed .xml file
 	In Finale Notepad, select ‘File → MusicXML → Export’. Choose .xml as the output file format and save to the desired directory.
